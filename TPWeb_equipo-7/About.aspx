@@ -2,8 +2,12 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <main aria-labelledby="title">
-        <h2 id="title"><%: Title %>.</h2>
-        <h3>Your application description page.</h3>
+        <%if (_articulo != null)
+            {  %>
+            <h1><%: _articulo.Nombre %></h1>
+        <%} else {  %>
+        <h1 id="title">About</h1>
         <p>Use this area to provide additional information.</p>
+        <%} %>
     </main>
 </asp:Content>
