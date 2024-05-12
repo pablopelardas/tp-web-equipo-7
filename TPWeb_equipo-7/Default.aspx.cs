@@ -23,6 +23,11 @@ namespace TPWeb_equipo_7
                     Session.Add("articulos", negocio.ListarArticulos());
                 }
                 ArticuloList = (List<Articulo>)Session["articulos"];
+                if (Session["carrito"] == null)
+                {
+                    List<Articulo> carrito = new List<Articulo>();
+                    Session["carrito"] = carrito;
+                }
             }
 
         }

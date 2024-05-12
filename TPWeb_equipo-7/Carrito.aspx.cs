@@ -11,7 +11,8 @@ namespace TPWeb_equipo_7
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            dgvArticulos.DataSource = Session["carrito"];
+            dgvArticulos.DataBind();
         }
     }
 }
