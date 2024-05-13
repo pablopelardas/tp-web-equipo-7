@@ -11,25 +11,16 @@ namespace TPWeb_equipo_7
 {
 
 
-    public partial class About
+    public partial class Carrito1
     {
 
         /// <summary>
-        /// txtCantidad control.
+        /// dgvArticulos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
-
-        /// <summary>
-        /// AgregarCarrito control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AgregarCarrito;
+        protected global::System.Web.UI.WebControls.GridView dgvArticulos;
     }
 }

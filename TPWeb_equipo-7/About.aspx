@@ -9,5 +9,7 @@
         <h1 id="title">About</h1>
         <p>Use this area to provide additional information.</p>
         <%} %>
+        <asp:TextBox runat="server" ID="txtCantidad" Text="1" />
+        <asp:Button runat="server"  ID="AgregarCarrito" Text="Agregar al Carrito" type="button" class="btn btn-primary btn-lg" OnClick="AgregarCarrito_Click" />
     </main>
 </asp:Content>

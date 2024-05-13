@@ -23,6 +23,18 @@ namespace TPWeb_equipo_7
 
             if (!IsPostBack)
             {
+                if (Session["articulos"] == null)
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    Session.Add("articulos", negocio.ListarArticulos());
+                }
+                ArticuloList = (List<Articulo>)Session["articulos"];
+                if (Session["carrito"] == null)
+                {
+                    List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
+                    Session["carrito"] = carrito;
+                }
+            }
                 filtroCategoria.DataSource = Session["listaCategorias"];
                 filtroCategoria.DataBind();
                 filtroCategoria.Items.Insert(0, "Seleccionar..");
