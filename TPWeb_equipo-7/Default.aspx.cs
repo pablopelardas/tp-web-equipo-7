@@ -17,24 +17,12 @@ namespace TPWeb_equipo_7
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            ListaArticulos = (List<Articulo>)Session["listaArticulos"];
-            ListaCategorias = (List<Categoria>)Session["listaCategorias"];
-            ListaMarcas = (List<Marca>)Session["listaMarcas"];
+            ListaArticulos = (List<Articulo>)Session["articulos"];
+            ListaCategorias = (List<Categoria>)Session["categorias"];
+            ListaMarcas = (List<Marca>)Session["marcas"];
 
             if (!IsPostBack)
             {
-                if (Session["articulos"] == null)
-                {
-                    ArticuloNegocio negocio = new ArticuloNegocio();
-                    Session.Add("articulos", negocio.ListarArticulos());
-                }
-                ArticuloList = (List<Articulo>)Session["articulos"];
-                if (Session["carrito"] == null)
-                {
-                    List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
-                    Session["carrito"] = carrito;
-                }
-            }
                 filtroCategoria.DataSource = Session["listaCategorias"];
                 filtroCategoria.DataBind();
                 filtroCategoria.Items.Insert(0, "Seleccionar..");
