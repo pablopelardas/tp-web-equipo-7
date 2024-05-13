@@ -25,7 +25,7 @@ namespace TPWeb_equipo_7
                 ArticuloList = (List<Articulo>)Session["articulos"];
                 if (Session["carrito"] == null)
                 {
-                    List<Articulo> carrito = new List<Articulo>();
+                    List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
                     Session["carrito"] = carrito;
                 }
             }
