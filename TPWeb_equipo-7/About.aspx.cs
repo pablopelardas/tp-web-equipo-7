@@ -58,6 +58,7 @@ namespace TPWeb_equipo_7
 
             //agrega el articulo actual al carrito
             Session.Add("carrito", carrito);
+            ((SiteMaster)Master).ActualizarCarrito();
         }
     }
 }

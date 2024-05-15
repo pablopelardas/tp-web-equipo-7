@@ -34,6 +34,33 @@ namespace TPWeb_equipo_7
                 List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
                 Session["carrito"] = carrito;
             }
+
+            ActualizarCarrito();
+
+        }
+
+        public void ActualizarCarrito()
+        {
+            List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
+            if (carrito != null && carrito.Count > 0)
+            {
+                int cantidadTotal = 0;
+                decimal importeTotal = 0m;
+
+                foreach (var articulo in carrito)
+                {
+                    cantidadTotal += articulo.Cantidad;
+                    importeTotal += articulo.PrecioTotal;
+                }
+
+                btnCarrito.Text = $"Carrito ({cantidadTotal}, ${importeTotal:F2})";
+            }
+        }
+
+        protected void ClickCarrito(object sender, EventArgs e)
+        {
+            // Redirigir a la página del carrito de compras
+            Response.Redirect("~/Carrito");
         }
     }
 }
