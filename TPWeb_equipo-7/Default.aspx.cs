@@ -23,10 +23,10 @@ namespace TPWeb_equipo_7
 
             if (!IsPostBack)
             {
-                filtroCategoria.DataSource = Session["listaCategorias"];
+                filtroCategoria.DataSource = ListaCategorias;
                 filtroCategoria.DataBind();
                 filtroCategoria.Items.Insert(0, "Seleccionar..");
-                filtroMarca.DataSource = Session["listaMarcas"];
+                filtroMarca.DataSource = ListaMarcas;
                 filtroMarca.DataBind();
                 filtroMarca.Items.Insert(0, "Seleccionar..");
             }

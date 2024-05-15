@@ -13,20 +13,20 @@ namespace TPWeb_equipo_7
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["listaMarcas"] == null)
+            if (Session["marcas"] == null)
             {
                 MarcaNegocio marcaNegocio = new MarcaNegocio();
-                Session.Add("listaMarcas", marcaNegocio.ListarMarcas());
+                Session.Add("marcas", marcaNegocio.ListarMarcas());
             }
-            if (Session["listaCategorias"] == null)
+            if (Session["categorias"] == null)
             {
                 CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-                Session.Add("listaCategorias", categoriaNegocio.ListarCategorias());
+                Session.Add("categorias", categoriaNegocio.ListarCategorias());
             }
-            if (Session["listaArticulos"] == null)
+            if (Session["articulos"] == null)
             {
                 ArticuloNegocio articuloNegocio = new ArticuloNegocio();
-                Session.Add("listaArticulos", articuloNegocio.ListarArticulos());
+                Session.Add("articulos", articuloNegocio.ListarArticulos());
             }
 
             if (Session["carrito"] == null)
