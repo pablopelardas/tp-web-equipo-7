@@ -45,15 +45,13 @@ namespace TPWeb_equipo_7
             if (carrito != null && carrito.Count > 0)
             {
                 int cantidadTotal = 0;
-                decimal importeTotal = 0m;
 
                 foreach (var articulo in carrito)
                 {
                     cantidadTotal += articulo.Cantidad;
-                    importeTotal += articulo.PrecioTotal;
                 }
 
-                btnCarrito.Text = $"Carrito ({cantidadTotal}, ${importeTotal:F2})";
+                btnCarrito.Text = $"Carrito ({cantidadTotal})";
             }
         }
 
