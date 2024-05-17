@@ -60,5 +60,13 @@ namespace TPWeb_equipo_7
             // Redirigir a la página del carrito de compras
             Response.Redirect("~/Carrito");
         }
+
+        protected void ClickBusqueda(object sender, EventArgs e)
+        {
+            string busqueda = txtBusqueda.Text;
+
+            Response.Redirect("~/?" + busqueda);
+
+        }
     }
 }
