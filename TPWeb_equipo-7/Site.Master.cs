@@ -65,7 +65,7 @@ namespace TPWeb_equipo_7
         {
             string busqueda = txtBusqueda.Text;
 
-            Response.Redirect("~/?" + busqueda);
+            Response.Redirect("~/Busqueda?" + busqueda);
 
         }
     }
