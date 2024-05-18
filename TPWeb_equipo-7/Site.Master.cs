@@ -14,59 +14,46 @@ namespace TPWeb_equipo_7
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["marcas"] == null)
+            if (!IsPostBack)
             {
-                MarcaNegocio marcaNegocio = new MarcaNegocio();
-                Session.Add("marcas", marcaNegocio.ListarMarcas());
-            }
-            if (Session["categorias"] == null)
-            {
-                CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-                Session.Add("categorias", categoriaNegocio.ListarCategorias());
-            }
-            if (Session["articulos"] == null)
-            {
-                ArticuloNegocio articuloNegocio = new ArticuloNegocio();
-                Session.Add("articulos", articuloNegocio.ListarArticulos());
-            }
-
-            if (Session["carrito"] == null)
-            {
-                List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
-                Session["carrito"] = carrito;
-            }
-
-            if (Session["importeTotal"] == null)
-            {
-                decimal importeTotal = 0m;
-                Session["importeTotal"] = importeTotal;
-            }
-            ActualizarCarrito();
-
-        }
-
-        public void ActualizarCarrito()
-        {
-            List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
-            if (carrito != null)
-            {
-                int cantidadTotal = 0;
-                //decimal importeTotal = 0m;
-                foreach (var articulo in carrito)
+                if (Session["marcas"] == null)
                 {
-                    cantidadTotal += articulo.Cantidad;
-                    //importeTotal += articulo.PrecioTotal;
+                    MarcaNegocio marcaNegocio = new MarcaNegocio();
+                    Session.Add("marcas", marcaNegocio.ListarMarcas());
                 }
-                //Session["importeTotal"] = importeTotal;
-                pillCarrito.Text = $"{cantidadTotal}";
+                if (Session["categorias"] == null)
+                {
+                    CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                    Session.Add("categorias", categoriaNegocio.ListarCategorias());
+                }
+                if (Session["articulos"] == null)
+                {
+                    ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                    Session.Add("articulos", articuloNegocio.ListarArticulos());
+                }
+
+                if (Session["carrito"] == null)
+                {
+                    List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
+                    Session["carrito"] = carrito;
+                    
+                }
+                if (Session["cantidadTotal"] == null)
+                {
+                    Session.Add("cantidadTotal", 0);
+                }
             }
 
         }
-
         protected void ClickCarrito(object sender, EventArgs e)
         {
             // Redirigir a la página del carrito de compras
             Response.Redirect("~/Carrito");
+        }
+
+        public void SumarCantidadCarrito(int cantidad)
+        {
+            Session["cantidadTotal"] = (int)Session["cantidadTotal"] + cantidad;
         }
 
         protected void ClickBusqueda(object sender, EventArgs e)

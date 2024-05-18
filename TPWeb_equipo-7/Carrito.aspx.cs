@@ -13,52 +13,64 @@ namespace TPWeb_equipo_7
     {
         public List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
         public Articulo _articulo;
-        public decimal importeTotal;
-        protected void Bind()
+        public decimal importeTotal = 0m;
+        protected void ActualizarGrilla()
         {
-            dgvArticulos.DataSource = Session["carrito"];
+            if (carrito.Count == 0)
+            {
+                Response.Redirect("Default.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+
+            }
+            dgvArticulos.DataSource = carrito;
             dgvArticulos.DataBind();
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            carrito = (List<ArticuloCarrito>)Session["carrito"];
+            if (carrito == null)
             {
-                Bind();
+                carrito = new List<ArticuloCarrito>();
             }
-            ActualizarTotal();            
+            ActualizarGrilla();
+            SumarTotalCarrito((decimal)carrito.Sum(x => x.PrecioTotal));            
         }
+
+        protected void SumarTotalCarrito(decimal importe)
+        {
+            importeTotal += importe;
+        }
+
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var id = dgvArticulos.SelectedDataKey.Value.ToString();
-
-            carrito = (List<ArticuloCarrito>)Session["carrito"];
+            var id = dgvArticulos.SelectedDataKey?.Value.ToString();
+            if (id == null) return;
+            int cantidad = 0;
+            decimal precioTotal = 0;
 
             for (int i = carrito.Count - 1; i >= 0; i--)
             {
                 if (carrito[i].Id.ToString() == id)
                 {
+                    cantidad = carrito[i].Cantidad;
+                    precioTotal = carrito[i].PrecioTotal;
                     carrito.RemoveAt(i);
+
                 }
             }
 
-            Session["carrito"] = carrito;
-            ((SiteMaster)Master).ActualizarCarrito();
-            ActualizarTotal();
-            Bind();
+            ((SiteMaster)Master).SumarCantidadCarrito(- cantidad);
+            SumarTotalCarrito(- precioTotal);
+            ActualizarGrilla();
+
         }
 
         protected void BtnUpDown_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            GridViewRow row = (GridViewRow)btn.NamingContainer;
-            TextBox txtCantidad = (TextBox)row.FindControl("txtCantidad");
-
-            int cantidad = int.Parse(txtCantidad.Text);
 
             int idArticulo = Convert.ToInt32(btn.CommandArgument);
-
-            List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
 
             ArticuloCarrito articulo = carrito.Find(a => a.Id == idArticulo);
 
@@ -67,30 +79,21 @@ namespace TPWeb_equipo_7
                 if (btn.CommandName == "Increase")
                 {
                     articulo.Cantidad++;
+                    ((SiteMaster)Master).SumarCantidadCarrito(1);
+                    SumarTotalCarrito(articulo.PrecioUnitario);
                 }
                 else if (btn.CommandName == "Decrease" && articulo.Cantidad > 1)
                 {
                     articulo.Cantidad--;
+                    ((SiteMaster)Master).SumarCantidadCarrito(-1);
+                    SumarTotalCarrito(-articulo.PrecioUnitario);
                 }
 
-                Session["carrito"] = carrito;
-                ((SiteMaster)Master).ActualizarCarrito();
-                ActualizarTotal();
-                Bind();
             }
+            ActualizarGrilla();
         }
 
-        protected void ActualizarTotal()
-        {
-            List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
-            if (carrito != null)
-            {
-                importeTotal = 0m;
-                foreach (var articulo in carrito)
-                {
-                    importeTotal += articulo.PrecioTotal;
-                }
-            }
-        }
+
+
     }
 }

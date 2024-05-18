@@ -54,7 +54,7 @@
                     </div>
                     <a class="btn btn-outline-light" href="Carrito.aspx">
                             <i class="bi-cart-fill me-1"></i>
-                        <asp:Label ID="pillCarrito" Text="0" CssClass="badge bg-dark text-white ms-1 rounded-pill" runat="server" />
+                            <span class="badge bg-dark text-white ms-1 rounded-pill"><%: Session["cantidadTotal"] %></span>
                     </a>
                 </div>
             </div>

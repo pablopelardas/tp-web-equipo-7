@@ -25,7 +25,6 @@
     </asp:GridView>
     <asp:Label runat="server">Total: <%: importeTotal %></asp:Label>
 
-
 </asp:Content>
 
 

@@ -13,20 +13,23 @@ namespace TPWeb_equipo_7
     {
         public Articulo _articulo;
         public List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
-        public ArticuloCarrito articuloCarrito = new ArticuloCarrito();
+        public int cantidadArticulo;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string id = Request.QueryString["id"];
-            if (id == null)
-            {
-                Response.Redirect("Default.aspx");
-            }
-            _articulo = ((List<Articulo>)Session["articulos"]).Find(x => x.Id == Convert.ToInt32(id));
-            if (_articulo == null)
-            {
-                Response.Redirect("Default.aspx");
-            }
+                string id = Request.QueryString["id"];
+                if (id == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                _articulo = ((List<Articulo>)Session["articulos"]).Find(x => x.Id == Convert.ToInt32(id));
+                if (_articulo == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+
+                cantidadArticulo = TextBox1.Text == "" ? 1 : Convert.ToInt32(TextBox1.Text);
         }
+
 
         protected void AgregarCarritoClick(object sender, EventArgs e)
         {
@@ -35,23 +38,38 @@ namespace TPWeb_equipo_7
 
             string id = Request.QueryString["id"];
             _articulo = ((List<Articulo>)Session["articulos"]).Find(x => x.Id == Convert.ToInt32(id));
+            ArticuloCarrito articuloCarrito = carrito.Find(x => x.Id == _articulo.Id);
 
-            if (carrito.Find(x => x.Id == _articulo.Id) != null)
+            if (articuloCarrito != null)
             {
-                articuloCarrito = carrito.Find(x => x.Id == _articulo.Id);
-                articuloCarrito.Cantidad += Convert.ToInt32(txtCantidad.Text);
+                articuloCarrito.Cantidad += cantidadArticulo;
             }
             else
             {
-                articuloCarrito.AgregarArticulo(_articulo);
-                articuloCarrito.Cantidad = Convert.ToInt32(txtCantidad.Text);
+                articuloCarrito = new ArticuloCarrito(_articulo);
+                articuloCarrito.Cantidad = cantidadArticulo;
                 carrito.Add(articuloCarrito);
             }
 
+            ((SiteMaster)Master).SumarCantidadCarrito(cantidadArticulo);
+            Response.Redirect("Default.aspx", false);
+            Context.ApplicationInstance.CompleteRequest();
 
-            //agrega el articulo actual al carrito
-            Session.Add("carrito", carrito);
-            ((SiteMaster)Master).ActualizarCarrito();
+        }
+
+        protected void BtnUpDown_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            if (btn.CommandName == "Increase")
+            {
+                cantidadArticulo += 1;
+            }
+            else if (btn.CommandName == "Decrease" && cantidadArticulo > 1)
+            {
+                cantidadArticulo -= 1;
+            }
+            TextBox1.Text = cantidadArticulo.ToString();
         }
     }
 }

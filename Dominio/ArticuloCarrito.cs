@@ -20,7 +20,7 @@ namespace Dominio
         {
             get { return PrecioUnitario * Cantidad; }
         }
-        public void AgregarArticulo(Articulo art)
+        public ArticuloCarrito (Articulo art)
         {
             this.Id = art.Id;
             this.Nombre = art.Nombre;
