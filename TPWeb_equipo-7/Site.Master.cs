@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Negocio;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -69,9 +70,23 @@ namespace TPWeb_equipo_7
 
         protected void ClickBusqueda(object sender, EventArgs e)
         {
+            string query = "?";
             string busqueda = txtBusqueda.Text;
 
-            Response.Redirect("~/?Busqueda=" + busqueda);
+            query += "Busqueda=" + busqueda;
+
+            if (Request.QueryString["Categoria"] != null)
+            {
+                query += "&Categoria=" + Request.QueryString["Categoria"];
+
+            }
+            if (Request.QueryString["Marca"] != null)
+            {
+                query += "&Marca=" + Request.QueryString["Marca"];
+            }
+
+            Response.Redirect("~/" + query);
+
 
         }
     }
