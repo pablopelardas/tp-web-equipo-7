@@ -48,7 +48,7 @@ namespace TPWeb_equipo_7
         public void ActualizarCarrito()
         {
             List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
-            if (carrito != null && carrito.Count > 0)
+            if (carrito != null)
             {
                 int cantidadTotal = 0;
                 decimal importeTotal = 0m;
@@ -58,8 +58,9 @@ namespace TPWeb_equipo_7
                     importeTotal += articulo.PrecioTotal;
                 }
                 Session["importeTotal"] = importeTotal;
-                btnCarrito.Text = $"Carrito ({cantidadTotal})";
+                pillCarrito.Text = $"{cantidadTotal}";
             }
+
         }
 
         protected void ClickCarrito(object sender, EventArgs e)
