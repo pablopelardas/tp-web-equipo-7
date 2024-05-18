@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,6 +15,10 @@ namespace TPWeb_equipo_7
         public List<Articulo> ListaArticulos { get; set; }
         public List<Categoria> ListaCategorias { get; set; }
         public List<Marca> ListaMarcas { get; set; }
+
+        private string filterCategoria = "";
+        private string filterMarca = "";
+        private string searchTerm = "";
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -31,41 +36,78 @@ namespace TPWeb_equipo_7
                 filtroMarca.Items.Insert(0, "Seleccionar..");
             }
 
-            if (Session["filtroCategoria"] != null)
+            string finalMessage = "";
+            
+            string queryCategoria = Request.QueryString["Categoria"];
+            string queryMarca = Request.QueryString["Marca"];
+            string queryBusqueda = Request.QueryString["Busqueda"];
+
+            if (queryCategoria != null)
             {
-                filtroCategoria.SelectedValue = Session["filtroCategoria"].ToString();
-                catBuscado.Text = filtroCategoria.SelectedItem.Text;
-                divCat.Visible = true;
-                ListaArticulos = ListaArticulos.FindAll(x => x.Categoria.Nombre == Session["filtroCategoria"].ToString());
+                filtroCategoria.SelectedValue = queryCategoria;
+                filterCategoria = queryCategoria;
+                ListaArticulos = ListaArticulos.FindAll(x => x.Categoria.Nombre == filterCategoria);
                 
             }
 
-            if (Session["filtroMarca"] != null)
+            if (queryMarca != null)
             {
-                filtroMarca.SelectedValue = Session["filtroMarca"].ToString();
-                mrcBuscado.Text = filtroMarca.SelectedItem.Text;
-                divMrc.Visible = true;
-                ListaArticulos = ListaArticulos.FindAll(x => x.Marca.Nombre == Session["filtroMarca"].ToString());
+                filtroMarca.SelectedValue = queryMarca;
+                filterMarca = queryMarca;
+                ListaArticulos = ListaArticulos.FindAll(x => x.Marca.Nombre == queryMarca);
             }
-        }
 
-        protected void Page_Unload(object sender, EventArgs e)
-        {
-            Session.Remove("filtroCategoria");
-            Session.Remove("filtroMarca");
+            if (queryBusqueda != null)
+            {
+                searchTerm = queryBusqueda;
+            }
+
+            if (filterCategoria != "" || filterMarca != "" || searchTerm != "")
+            {
+                finalMessage = "Filtrado por: <br>";
+                if (filterCategoria != "")
+                {
+                    finalMessage += "Categoria: " + filterCategoria + " <br>";
+                    ListaArticulos = ListaArticulos.FindAll(x => x.Categoria.Nombre == filterCategoria);
+                }
+                if (filterMarca != "")
+                {
+                    finalMessage += "Marca: " + filterMarca + " <br>";
+                    ListaArticulos = ListaArticulos.FindAll(x => x.Marca.Nombre == filterMarca);
+                }
+                if (searchTerm != "")
+                {
+                    finalMessage += "Busqueda: " + searchTerm + " <br>";
+                    ListaArticulos = ListaArticulos.FindAll(x => x.Nombre.ToLower().Contains(searchTerm.ToLower()));
+                }
+
+                filtroSeleccionado.Text = finalMessage;
+                filtroSeleccionado.Visible = true;
+            }
+
+
+
         }
 
         protected void btnFiltro_Click(object sender, EventArgs e)
         {
             // not implemented    
+            string query = "";
+            if (Request.QueryString["Busqueda"] != "")
+            {
+                query += "&Busqueda=" + Request.QueryString["Busqueda"];
+            }
             if (filtroCategoria.SelectedIndex != 0)
             {
-                Session["filtroCategoria"] = filtroCategoria.SelectedValue;
+                query += "&Categoria=" + filtroCategoria.SelectedValue;
+
             }
             if (filtroMarca.SelectedIndex != 0)
             {
-                Session["filtroMarca"] = filtroMarca.SelectedValue;
+                query += "&Marca=" + filtroMarca.SelectedValue;
             }
+
+            Response.Redirect("Default.aspx?" + query);
         }
     }
 }
