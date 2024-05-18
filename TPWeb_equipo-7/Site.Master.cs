@@ -51,13 +51,13 @@ namespace TPWeb_equipo_7
             if (carrito != null)
             {
                 int cantidadTotal = 0;
-                decimal importeTotal = 0m;
+                //decimal importeTotal = 0m;
                 foreach (var articulo in carrito)
                 {
                     cantidadTotal += articulo.Cantidad;
-                    importeTotal += articulo.PrecioTotal;
+                    //importeTotal += articulo.PrecioTotal;
                 }
-                Session["importeTotal"] = importeTotal;
+                //Session["importeTotal"] = importeTotal;
                 pillCarrito.Text = $"{cantidadTotal}";
             }
 

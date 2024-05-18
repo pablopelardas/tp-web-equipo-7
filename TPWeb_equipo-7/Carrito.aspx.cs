@@ -13,7 +13,7 @@ namespace TPWeb_equipo_7
     {
         public List<ArticuloCarrito> carrito = new List<ArticuloCarrito>();
         public Articulo _articulo;
-
+        public decimal importeTotal;
         protected void Bind()
         {
             dgvArticulos.DataSource = Session["carrito"];
@@ -21,7 +21,11 @@ namespace TPWeb_equipo_7
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            Bind();
+            if (!IsPostBack)
+            {
+                Bind();
+            }
+            ActualizarTotal();            
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -40,6 +44,7 @@ namespace TPWeb_equipo_7
 
             Session["carrito"] = carrito;
             ((SiteMaster)Master).ActualizarCarrito();
+            ActualizarTotal();
             Bind();
         }
 
@@ -70,10 +75,22 @@ namespace TPWeb_equipo_7
 
                 Session["carrito"] = carrito;
                 ((SiteMaster)Master).ActualizarCarrito();
-
+                ActualizarTotal();
                 Bind();
             }
         }
 
+        protected void ActualizarTotal()
+        {
+            List<ArticuloCarrito> carrito = (List<ArticuloCarrito>)Session["carrito"];
+            if (carrito != null)
+            {
+                importeTotal = 0m;
+                foreach (var articulo in carrito)
+                {
+                    importeTotal += articulo.PrecioTotal;
+                }
+            }
+        }
     }
 }

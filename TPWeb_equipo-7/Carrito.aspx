@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="TPWeb_equipo_7.Carrito1" enableEventValidation="false" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="TPWeb_equipo_7.Carrito1"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Carrito</h1>
@@ -11,8 +11,8 @@
                 <ItemTemplate>
                     <div style="display: flex; align-items: center;">
                         <asp:TextBox ID="txtCantidad" runat="server" Text='<%# Eval("Cantidad") %>' CssClass="txtCantidad" ReadOnly="true" Style="width: 50px; text-align: center;" />
-                        <asp:Button ID="btnUp" runat="server" Text="▲" CommandName="Increase" CommandArgument='<%# Eval("Id") %>' CssClass="btnUpDown" OnClick="BtnUpDown_Click" />
-                        <asp:Button ID="btnDown" runat="server" Text="▼" CommandName="Decrease" CommandArgument='<%# Eval("Id") %>' CssClass="btnUpDown" OnClick="BtnUpDown_Click" />
+                        <asp:Button ID="btnUp" UseSubmitBehavior="false" runat="server" Text="▲" CommandName="Increase" CommandArgument='<%# Eval("Id") %>' CssClass="btnUpDown" OnClick="BtnUpDown_Click" />
+                        <asp:Button ID="btnDown" UseSubmitBehavior="false" runat="server" Text="▼" CommandName="Decrease" CommandArgument='<%# Eval("Id") %>' CssClass="btnUpDown" OnClick="BtnUpDown_Click" />
                     </div>
                 </ItemTemplate>
             </asp:TemplateField>
@@ -23,7 +23,7 @@
         </Columns>
 
     </asp:GridView>
-    <asp:Label runat="server">Total: <%: Session["importeTotal"] %></asp:Label>
+    <asp:Label runat="server">Total: <%: importeTotal %></asp:Label>
 
 
 </asp:Content>
