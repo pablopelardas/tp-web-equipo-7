@@ -16,26 +16,19 @@ namespace TPWeb_equipo_7
         public ArticuloCarrito articuloCarrito = new ArticuloCarrito();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            string id = Request.QueryString["id"];
+            if (id == null)
             {
-                if (Session["articulos"] == null)
-                {
-                    ArticuloNegocio negocio = new ArticuloNegocio();
-                    Session.Add("articulos", negocio.ListarArticulos());
-                }
-                // query id
-                string id = Request.QueryString["id"];
-
-                _articulo = ((List<Articulo>)Session["articulos"]).Find(x => x.Id == Convert.ToInt32(id));
-                // si no encuentra el articulo, redirige a la pagina principal
-                if (_articulo == null)
-                {
-                    Response.Redirect("Default.aspx");
-                }
+                Response.Redirect("Default.aspx");
+            }
+            _articulo = ((List<Articulo>)Session["articulos"]).Find(x => x.Id == Convert.ToInt32(id));
+            if (_articulo == null)
+            {
+                Response.Redirect("Default.aspx");
             }
         }
 
-        protected void AgregarCarrito_Click(object sender, EventArgs e)
+        protected void AgregarCarritoClick(object sender, EventArgs e)
         {
             //obtiene la lista actual del carrito
             carrito = (List<ArticuloCarrito>)Session["carrito"];

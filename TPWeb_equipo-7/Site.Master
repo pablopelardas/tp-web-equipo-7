@@ -51,10 +51,10 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>
                     </ul>
                     <div class="d-inline-flex align-items-center">
-                        <form class="form-inline">
+                        <div class="d-inline-flex gap-2">
                             <asp:TextBox ID="txtBusqueda" CssClass="form-control mr-sm-2" runat="server" placeholder="Search"></asp:TextBox>
                             <asp:Button ID="btnBusqueda" runat="server" CssClass="btn btn-outline-success my-2 my-sm-0" Text="Buscar" OnClick="ClickBusqueda" />
-                        </form>
+                        </div>
                     </div>
 
                     <asp:Button ID="btnCarrito" runat="server" CssClass="btn btn-info" Text="Carrito (Vacio)" OnClick="ClickCarrito" />
