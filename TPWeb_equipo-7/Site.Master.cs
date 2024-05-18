@@ -35,6 +35,11 @@ namespace TPWeb_equipo_7
                 Session["carrito"] = carrito;
             }
 
+            if (Session["importeTotal"] == null)
+            {
+                decimal importeTotal = 0m;
+                Session["importeTotal"] = importeTotal;
+            }
             ActualizarCarrito();
 
         }
@@ -45,12 +50,13 @@ namespace TPWeb_equipo_7
             if (carrito != null && carrito.Count > 0)
             {
                 int cantidadTotal = 0;
-
+                decimal importeTotal = 0m;
                 foreach (var articulo in carrito)
                 {
                     cantidadTotal += articulo.Cantidad;
+                    importeTotal += articulo.PrecioTotal;
                 }
-
+                Session["importeTotal"] = importeTotal;
                 btnCarrito.Text = $"Carrito ({cantidadTotal})";
             }
         }
