@@ -12,9 +12,14 @@
                 <div class="col-xl-5 col-sm-4">
                     <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <%if (_articulo.Imagenes.Count > 0)
+                                {
+                                    for (int i = 0; i < _articulo.Imagenes.Count; i++)
+                                    {
+                            %>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%: i %>" class="<%: i==0?"active": "" %>" aria-current="<%: i==0?true: false %>" aria-label="Slide <%:i %>"></button>
+                            <%} }
+                            %>
                         </div>
                         <div class="carousel-inner">
                             <%if (_articulo.Imagenes.Count > 0)
