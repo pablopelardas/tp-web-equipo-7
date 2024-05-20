@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="TPWeb_equipo_7.Carrito1"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Carrito.aspx.cs" Inherits="TPWeb_equipo_7.Carrito1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Carrito</h1>
@@ -17,14 +17,29 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField HeaderText="Total" DataField="PrecioTotal" />
-            <asp:CommandField ShowSelectButton="true" ButtonType="Button" ControlStyle-CssClass="btn-close" SelectText=""/>
-
-
+            <asp:CommandField ShowSelectButton="true" ButtonType="Button" ControlStyle-CssClass="btn-close" SelectText="" />
         </Columns>
-
     </asp:GridView>
-    <asp:Label runat="server">Total: <%: importeTotal %></asp:Label>
+    <hr CssClass="solid">
+    <div class="label-container">
+        <asp:Label runat="server">Total: <%: importeTotal %></asp:Label>
+    </div>
+    <hr CssClass="solid">
+    <style>
+        .label-container {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            color: #333;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+        }
 
+        hr.solid {
+            border-top: 3px solid #ccc;
+        }
+    </style>
 </asp:Content>
-
 
